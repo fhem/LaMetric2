@@ -1,5 +1,5 @@
 ###############################################################################
-# $Id: 70_LaMetric2.pm 19555 2019-06-05 13:42:44Z loredo $
+# $Id: 70_LaMetric2.pm 19556 2019-06-05 14:20:29Z loredo $
 ###############################################################################
 #
 # A module to control LaMetric.
@@ -642,9 +642,11 @@ sub LaMetric2_ReceiveCommand($$$) {
 "LaMetric2 $name: called function LaMetric2_ReceiveCommand() for service '$service':"
       . "\n\nERROR: $err\n"
       . "HTTP RESPONSE HEADER:\n"
-      . $param->{httpheader}
+      . (    defined($param)
+          && ref($param)
+          && defined( $param->{httpheader} ) ? $param->{httpheader} : "" )
       . "\n\nHTTP RESPONSE BODY:\n"
-      . ($data?$data:"");
+      . ( defined($data) ? $data : "" );
 
     my $state = ReadingsVal( $name, "state", "initialized" );
     my $power = ReadingsVal( $name, "power", "off" );
@@ -1131,8 +1133,8 @@ sub LaMetric2_SetScreensaver {
         );
 
         if ( $screensaver ne "off" ) {
-            $body{screensaver}{enabled}           = 1;
-            $body{screensaver}{mode}              = $screensaver;
+            $body{screensaver}{enabled}     = 1;
+            $body{screensaver}{mode}        = $screensaver;
             $body{screensaver}{mode_params} = (
                 {
                     enabled => 1,
