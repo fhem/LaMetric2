@@ -1,5 +1,5 @@
 ###############################################################################
-# $Id: 70_LaMetric2.pm 19543 2019-06-04 08:32:16Z loredo $
+# $Id: 70_LaMetric2.pm 19555 2019-06-05 13:42:44Z loredo $
 ###############################################################################
 #
 # A module to control LaMetric.
@@ -644,7 +644,7 @@ sub LaMetric2_ReceiveCommand($$$) {
       . "HTTP RESPONSE HEADER:\n"
       . $param->{httpheader}
       . "\n\nHTTP RESPONSE BODY:\n"
-      . $data;
+      . ($data?$data:"");
 
     my $state = ReadingsVal( $name, "state", "initialized" );
     my $power = ReadingsVal( $name, "power", "off" );
